@@ -43,14 +43,6 @@ class Menu:
             else:
                 print("given is not an option \n")
 
-    def read_data_from_file(self):
-        with open('./noteFiles/notes.txt') as notes:
-            data = json.load(notes)
-            if not data:
-                return False
-            else:
-                return data
-
     def show_note(self):
         ''' Read a note from the file as dict and print
             on the console '''
@@ -81,7 +73,7 @@ class Menu:
                 date = note['date']
                 cDate = note['completion-date']
                 print(
-                    f'   {note_id}-  memo = {memo}, data = {date}, completion-date = {cDate}')
+                    f'   {note_id}-  memo = {memo}, date = {date}, completion-date = {cDate}')
         else:
             print('NoteBook is empty, Create new notes \n')
 
@@ -90,9 +82,9 @@ class Menu:
         print('\n')
         exsits = self.notebook.search(note_id)
         if exsits:
-            status = 'Note has been Found'
+            status = 'Note with this Id exists'
         else:
-            status = 'Note with such Id does not exits'
+            status = 'Note with such Id does not exists'
         print(status)
 
     def add_note(self):

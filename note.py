@@ -1,9 +1,10 @@
 from datetime import date
 import json
 
-# variable to store the previos id
 
-
+# get last_id from
+# file if {notes}
+# exists
 def global_last_id():
     with open('./last_id.txt') as id:
         last_id = id.read()
@@ -12,6 +13,7 @@ def global_last_id():
     return False
 
 
+# variable to store the previos id
 last_id = global_last_id() if global_last_id() else 0
 
 
@@ -36,3 +38,7 @@ class Note:
     def write_last_id(self, last_id):
         with open('./last_id.txt', 'w') as id:
             id.write(last_id)
+
+    def reset_id():
+        global last_id
+        last_id = 0

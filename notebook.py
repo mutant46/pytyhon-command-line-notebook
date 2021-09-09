@@ -3,6 +3,9 @@ from note import Note
 import json
 # global varibales
 
+# to read data
+# after program end
+
 
 def global_read_data():
     with open('./noteFiles/notes.txt') as notes:
@@ -10,6 +13,8 @@ def global_read_data():
         return data
 
 
+# set notes to emply
+# list for the first time
 notes = global_read_data() if global_read_data() else []
 
 
@@ -83,15 +88,18 @@ class Notebook:
 
     def remove_data_from_file(self):
         ''' delete all the notes from the notebook and
-            files '''
+            files and reset the id back to zero '''
+        self.set_global_notes()
         self.modify_data_in_file([])
+        with open('./last_id.txt', 'w') as last_id:
+            last_id.write('0')
+        Note.reset_id()
 
     def remove_note_from_notebook(self, note_id):
         ''' Removing note of given id and refresing the 
             notebook notes attibutes '''
         for note in self.notes:
             if note['id'] == int(note_id):
-                print(note['id'])
                 new_notes = [
                     notes for notes in self.notes if notes['id'] != int(note_id)]
                 self.modify_data_in_file(new_notes)
@@ -104,3 +112,10 @@ class Notebook:
         with open('./noteFiles/notes.txt', 'w') as notes:
             json.dump(new_notes_array, notes, indent=4)
         self.notes = self.read_data_from_file()
+        self.set_global_notes(self.notes)
+
+    def set_global_notes(self, list=[]):
+        ''' Modify the global notes when delete
+            operation happens '''
+        global notes
+        notes = list
